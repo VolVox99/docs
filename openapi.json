@@ -1,0 +1,764 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "FairSentry API",
+    "description": "API for FairSentry, an AI compliance platform for property managers to ensure compliance with fair housing laws.",
+    "version": "0.1.0"
+  },
+  "paths": {
+    "/api/v1/secure/check-compliance": {
+      "post": {
+        "summary": "Check Compliance",
+        "operationId": "check_compliance_api_v1_secure_check_compliance_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ComplianceCheck"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ComplianceResult"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "APIKeyHeader": []
+          }
+        ]
+      }
+    },
+    "/api/v1/secure/listing-status/{listing_id}": {
+      "get": {
+        "summary": "Get Listing Status",
+        "operationId": "get_listing_status_api_v1_secure_listing_status__listing_id__get",
+        "security": [
+          {
+            "APIKeyHeader": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "listing_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Listing Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListingStatus"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/secure/listings/{listing_id}/inactive": {
+      "put": {
+        "summary": "Mark Listing Inactive",
+        "operationId": "mark_listing_inactive_api_v1_secure_listings__listing_id__inactive_put",
+        "security": [
+          {
+            "APIKeyHeader": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "listing_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Listing Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AddFeedbackRequest": {
+        "properties": {
+          "feedback": {
+            "type": "string",
+            "title": "Feedback"
+          },
+          "compliance_log_id": {
+            "type": "integer",
+            "title": "Compliance Log Id"
+          }
+        },
+        "type": "object",
+        "required": [
+          "feedback",
+          "compliance_log_id"
+        ],
+        "title": "AddFeedbackRequest"
+      },
+      "AnalyticsMetric": {
+        "properties": {
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "value": {
+            "type": "string",
+            "title": "Value"
+          },
+          "trend": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "up",
+                  "down"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Trend"
+          },
+          "change": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Change"
+          },
+          "percentage": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Percentage"
+          }
+        },
+        "type": "object",
+        "required": [
+          "title",
+          "value"
+        ],
+        "title": "AnalyticsMetric"
+      },
+      "ComplianceCheck": {
+        "properties": {
+          "input_text": {
+            "type": "string",
+            "title": "Input Text"
+          },
+          "city": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "City"
+          },
+          "state": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "State"
+          },
+          "listing_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Listing Id"
+          },
+          "host_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Host Id"
+          },
+          "section_type": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Section Type"
+          }
+        },
+        "type": "object",
+        "required": [
+          "input_text"
+        ],
+        "title": "ComplianceCheck"
+      },
+      "ComplianceDataPoint": {
+        "properties": {
+          "date": {
+            "type": "string",
+            "title": "Date"
+          },
+          "value": {
+            "type": "number",
+            "title": "Value"
+          }
+        },
+        "type": "object",
+        "required": [
+          "date",
+          "value"
+        ],
+        "title": "ComplianceDataPoint"
+      },
+      "ComplianceResult": {
+        "properties": {
+          "compliant": {
+            "type": "boolean",
+            "title": "Compliant"
+          },
+          "violation_summary": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Violation Summary"
+          },
+          "violation_categories": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Violation Categories"
+          },
+          "compliant_suggestions": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Compliant Suggestions"
+          },
+          "severity": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Severity"
+          }
+        },
+        "type": "object",
+        "required": [
+          "compliant"
+        ],
+        "title": "ComplianceResult"
+      },
+      "DashboardAnalytics": {
+        "properties": {
+          "metrics": {
+            "items": {
+              "$ref": "#/components/schemas/AnalyticsMetric"
+            },
+            "type": "array",
+            "title": "Metrics"
+          },
+          "compliance_trend": {
+            "items": {
+              "$ref": "#/components/schemas/ComplianceDataPoint"
+            },
+            "type": "array",
+            "title": "Compliance Trend"
+          },
+          "violation_categories": {
+            "items": {
+              "$ref": "#/components/schemas/ViolationCategory"
+            },
+            "type": "array",
+            "title": "Violation Categories"
+          },
+          "problematic_locations": {
+            "items": {
+              "$ref": "#/components/schemas/ProblematicLocation"
+            },
+            "type": "array",
+            "title": "Problematic Locations"
+          },
+          "least_compliant_hosts": {
+            "items": {
+              "$ref": "#/components/schemas/NonCompliantHost"
+            },
+            "type": "array",
+            "title": "Least Compliant Hosts"
+          },
+          "section_type_violations": {
+            "items": {
+              "$ref": "#/components/schemas/SectionTypeViolation"
+            },
+            "type": "array",
+            "title": "Section Type Violations"
+          }
+        },
+        "type": "object",
+        "required": [
+          "metrics",
+          "compliance_trend",
+          "violation_categories",
+          "problematic_locations",
+          "least_compliant_hosts",
+          "section_type_violations"
+        ],
+        "title": "DashboardAnalytics"
+      },
+      "EmailAlertRequest": {
+        "properties": {
+          "emails": {
+            "items": {
+              "type": "string",
+              "format": "email"
+            },
+            "type": "array",
+            "title": "Emails"
+          },
+          "type": {
+            "type": "string",
+            "title": "Type"
+          },
+          "active": {
+            "type": "boolean",
+            "title": "Active"
+          }
+        },
+        "type": "object",
+        "required": [
+          "emails",
+          "type",
+          "active"
+        ],
+        "title": "EmailAlertRequest"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "ListingStatus": {
+        "properties": {
+          "listing_id": {
+            "type": "string",
+            "title": "Listing Id"
+          },
+          "compliant": {
+            "type": "boolean",
+            "title": "Compliant"
+          },
+          "noncompliant_since": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Noncompliant Since"
+          },
+          "noncompliant_sections": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Noncompliant Sections"
+          },
+          "violation_categories": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Violation Categories"
+          },
+          "violation_summaries": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Violation Summaries"
+          },
+          "severity": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Severity"
+          }
+        },
+        "type": "object",
+        "required": [
+          "listing_id",
+          "compliant"
+        ],
+        "title": "ListingStatus"
+      },
+      "NonCompliantHost": {
+        "properties": {
+          "host_id": {
+            "type": "string",
+            "title": "Host Id"
+          },
+          "violations": {
+            "type": "integer",
+            "title": "Violations"
+          },
+          "rate": {
+            "type": "string",
+            "title": "Rate"
+          },
+          "common_violation": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Common Violation"
+          }
+        },
+        "type": "object",
+        "required": [
+          "host_id",
+          "violations",
+          "rate"
+        ],
+        "title": "NonCompliantHost"
+      },
+      "NonCompliantListing": {
+        "properties": {
+          "listing_id": {
+            "type": "string",
+            "title": "Listing Id"
+          },
+          "host_id": {
+            "type": "string",
+            "title": "Host Id"
+          },
+          "city": {
+            "type": "string",
+            "title": "City"
+          },
+          "state": {
+            "type": "string",
+            "title": "State"
+          },
+          "noncompliant_since": {
+            "type": "string",
+            "title": "Noncompliant Since"
+          },
+          "noncompliant_sections": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Noncompliant Sections"
+          },
+          "violation_categories": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Violation Categories"
+          },
+          "violation_summaries": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Violation Summaries"
+          },
+          "severity": {
+            "type": "integer",
+            "title": "Severity"
+          }
+        },
+        "type": "object",
+        "required": [
+          "listing_id",
+          "host_id",
+          "city",
+          "state",
+          "noncompliant_since",
+          "noncompliant_sections",
+          "violation_categories",
+          "violation_summaries",
+          "severity"
+        ],
+        "title": "NonCompliantListing"
+      },
+      "ProblematicLocation": {
+        "properties": {
+          "city": {
+            "type": "string",
+            "title": "City"
+          },
+          "state": {
+            "type": "string",
+            "title": "State"
+          },
+          "violations": {
+            "type": "integer",
+            "title": "Violations"
+          },
+          "compliance_rate": {
+            "type": "string",
+            "title": "Compliance Rate"
+          },
+          "common_violation": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Common Violation"
+          }
+        },
+        "type": "object",
+        "required": [
+          "city",
+          "state",
+          "violations",
+          "compliance_rate"
+        ],
+        "title": "ProblematicLocation"
+      },
+      "SectionTypeViolation": {
+        "properties": {
+          "section_type": {
+            "type": "string",
+            "title": "Section Type"
+          },
+          "count": {
+            "type": "integer",
+            "title": "Count"
+          },
+          "percentage": {
+            "type": "number",
+            "title": "Percentage"
+          }
+        },
+        "type": "object",
+        "required": [
+          "section_type",
+          "count",
+          "percentage"
+        ],
+        "title": "SectionTypeViolation"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      },
+      "ViolationCategory": {
+        "properties": {
+          "category": {
+            "type": "string",
+            "title": "Category"
+          },
+          "count": {
+            "type": "integer",
+            "title": "Count"
+          },
+          "percentage": {
+            "type": "number",
+            "title": "Percentage"
+          }
+        },
+        "type": "object",
+        "required": [
+          "category",
+          "count",
+          "percentage"
+        ],
+        "title": "ViolationCategory"
+      }
+    },
+    "securitySchemes": {
+      "APIKeyHeader": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-API-Key"
+      }
+    }
+  }
+}
