@@ -12,7 +12,7 @@
     "openapi": "https://padsplit.fairsentry.com/openapi.json",
     "playground": {
       "proxy": false,
-      "display": "none"
+      "display": "simple"
     }
   },
   "navigation": {
