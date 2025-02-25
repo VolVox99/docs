@@ -9,6 +9,7 @@
     "/api/v1/secure/check-compliance": {
       "post": {
         "summary": "Check Compliance",
+        "description": "Checkyo compliance of a host",
         "operationId": "check_compliance_api_v1_secure_check_compliance_post",
         "requestBody": {
           "content": {
@@ -118,7 +119,14 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
               }
             }
           },
@@ -215,7 +223,8 @@
         "properties": {
           "input_text": {
             "type": "string",
-            "title": "Input Text"
+            "title": "Input Text",
+            "description": "The text content of the listing, or section of the listing, to check for compliance."
           },
           "city": {
             "anyOf": [
@@ -226,7 +235,8 @@
                 "type": "null"
               }
             ],
-            "title": "City"
+            "title": "City",
+            "description": "The city where the listing is located."
           },
           "state": {
             "anyOf": [
@@ -237,7 +247,8 @@
                 "type": "null"
               }
             ],
-            "title": "State"
+            "title": "State",
+            "description": "The state where the listing is located."
           },
           "listing_id": {
             "anyOf": [
@@ -248,7 +259,8 @@
                 "type": "null"
               }
             ],
-            "title": "Listing Id"
+            "title": "Listing Id",
+            "description": "The unique identifier for the listing. If not provided, the result will not be stored or affect any metrics on the dashboard. This can be useful for testing purposes."
           },
           "host_id": {
             "anyOf": [
@@ -259,7 +271,8 @@
                 "type": "null"
               }
             ],
-            "title": "Host Id"
+            "title": "Host Id",
+            "description": "The unique identifier for the host of the listing."
           },
           "section_type": {
             "anyOf": [
@@ -270,7 +283,8 @@
                 "type": "null"
               }
             ],
-            "title": "Section Type"
+            "title": "Section Type",
+            "description": "The type of section from the listing that is being checked for compliance. It is recommended to use a predefined set of values (e.g. an enum) for this field to ensure consistency across your codebase. For example, 'title', 'description', 'rules', etc."
           }
         },
         "type": "object",
@@ -301,7 +315,8 @@
         "properties": {
           "compliant": {
             "type": "boolean",
-            "title": "Compliant"
+            "title": "Compliant",
+            "description": "Whether the input text is potentiallycompliant with fair housing laws."
           },
           "violation_summary": {
             "anyOf": [
@@ -312,7 +327,8 @@
                 "type": "null"
               }
             ],
-            "title": "Violation Summary"
+            "title": "Violation Summary",
+            "description": "A summary of the potential violations found in the input text, if any."
           },
           "violation_categories": {
             "anyOf": [
@@ -326,7 +342,8 @@
                 "type": "null"
               }
             ],
-            "title": "Violation Categories"
+            "title": "Violation Categories",
+            "description": "The categories of potential violations found in the input text, if any."
           },
           "compliant_suggestions": {
             "anyOf": [
@@ -340,7 +357,8 @@
                 "type": "null"
               }
             ],
-            "title": "Compliant Suggestions"
+            "title": "Compliant Suggestions",
+            "description": "Suggestions for potentially making the input text compliant, if applicable."
           },
           "severity": {
             "anyOf": [
@@ -351,7 +369,8 @@
                 "type": "null"
               }
             ],
-            "title": "Severity"
+            "title": "Severity",
+            "description": "The severity level of the potential violations found, if any. This is a number between 1 and 10."
           }
         },
         "type": "object",
@@ -460,11 +479,13 @@
         "properties": {
           "listing_id": {
             "type": "string",
-            "title": "Listing Id"
+            "title": "Listing Id",
+            "description": "The unique identifier for the listing."
           },
           "compliant": {
             "type": "boolean",
-            "title": "Compliant"
+            "title": "Compliant",
+            "description": "Whether the listing, based on the most recent compliance check, is currently potentiallycompliant with fair housing laws."
           },
           "noncompliant_since": {
             "anyOf": [
@@ -475,7 +496,8 @@
                 "type": "null"
               }
             ],
-            "title": "Noncompliant Since"
+            "title": "Noncompliant Since",
+            "description": "The date when the listing became potentially non-compliant, if applicable."
           },
           "noncompliant_sections": {
             "anyOf": [
@@ -489,7 +511,8 @@
                 "type": "null"
               }
             ],
-            "title": "Noncompliant Sections"
+            "title": "Noncompliant Sections",
+            "description": "The section_type's of the listing that are potentially non-compliant, if any."
           },
           "violation_categories": {
             "anyOf": [
@@ -503,7 +526,8 @@
                 "type": "null"
               }
             ],
-            "title": "Violation Categories"
+            "title": "Violation Categories",
+            "description": "The categories of potential violations found in the listing, if any."
           },
           "violation_summaries": {
             "anyOf": [
@@ -517,7 +541,8 @@
                 "type": "null"
               }
             ],
-            "title": "Violation Summaries"
+            "title": "Violation Summaries",
+            "description": "Summaries of the potential violations found in the listing, if any."
           },
           "severity": {
             "anyOf": [
@@ -528,7 +553,8 @@
                 "type": "null"
               }
             ],
-            "title": "Severity"
+            "title": "Severity",
+            "description": "The maximum severity level of the potential violations found in the listing, if any."
           }
         },
         "type": "object",

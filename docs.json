@@ -3,23 +3,29 @@
   "theme": "mint",
   "name": "FairSentry API Reference",
   "colors": {
-    "primary": "#16A34A",
-    "light": "#07C983",
-    "dark": "#15803D"
+    "primary": "#0000FF",
+    "light": "#ADD8E6",
+    "dark": "#0000FF"
   },
-  "favicon": "/favicon.svg",
-  "api":{
-    "openapi": "https://padsplit.fairsentry.com/openapi.json",
-    "playground": {
-      "proxy": false,
-      "display": "simple"
+  "favicon": "https://fairsentry.com/favicon.ico",
+  "api": {
+    "mdx": {
+      "server": "https://padsplit.fairsentry.com/",
+      "auth": {
+        "method": "key",
+        "name": "x-api-key"
+      }
     }
   },
   "navigation": {
-    "tabs": [
+    "tabs": [ 
       {
         "tab": "API Reference",
-        "openapi": "./openapi.json"
+        "pages": [
+          "api-reference/check-compliance",
+          "api-reference/get-listing-status",
+          "api-reference/mark-listing-inactive"
+        ]
       }
     ],
     "global": {
