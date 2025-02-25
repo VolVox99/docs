@@ -536,7 +536,7 @@
           "listing_id",
           "compliant"
         ],
-        "title": "Listingtatus"
+        "title": "ListingStatus"
       },
       "NonCompliantHost": {
         "properties": {
