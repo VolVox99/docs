@@ -32,12 +32,42 @@
               }
             }
           },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
           "422": {
             "description": "Validation Error",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -77,6 +107,36 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ListingStatus"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -126,6 +186,36 @@
                       "type": "string"
                     }
                   }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -236,7 +326,7 @@
               }
             ],
             "title": "City",
-            "description": "The city where the listing is located."
+            "description": "The name of the city where the listing is located."
           },
           "state": {
             "anyOf": [
@@ -248,7 +338,7 @@
               }
             ],
             "title": "State",
-            "description": "The state where the listing is located."
+            "description": "The state where the listing is located. Can be either the abbreviated (CA) or full name (California)."
           },
           "listing_id": {
             "anyOf": [
@@ -555,12 +645,18 @@
             ],
             "title": "Severity",
             "description": "The maximum severity level of the potential violations found in the listing, if any."
+          },
+          "inactive": {
+            "type": "boolean",
+            "title": "Inactive",
+            "description": "Whether the listing is marked inactive or not."
           }
         },
         "type": "object",
         "required": [
           "listing_id",
-          "compliant"
+          "compliant",
+          "inactive"
         ],
         "title": "ListingStatus"
       },
@@ -777,6 +873,17 @@
           "percentage"
         ],
         "title": "ViolationCategory"
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "message"
+        ]
       }
     },
     "securitySchemes": {
